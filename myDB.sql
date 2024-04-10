@@ -55,4 +55,30 @@ WHERE hire_date IS NULL;
 UPDATE employees
 SET hourly_pay = 10.25
 WHERE employee_id = 6;
+
+UPDATE employees
+SET hire_date = "2024-01-06"
+WHERE employee_id = 6;
 SELECT * FROM employees;
+
+SET AUTOCOMMIT = OFF;
+COMMIT;
+
+DELETE FROM employees;
+SELECT * FROM employees;
+
+ROLLBACK;
+SELECT * FROM employees;
+COMMIT;
+
+CREATE TABLE test(
+	my_date DATE,
+	my_time TIME,
+    my_datetime DATETIME
+    );
+SELECT * FROM test;
+INSERT INTO test
+VALUES (CURRENT_DATE(),CURRENT_TIME(),NOW());
+SELECT * FROM test;
+DROP TABLE test;
+
