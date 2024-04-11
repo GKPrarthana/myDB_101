@@ -82,3 +82,109 @@ VALUES (CURRENT_DATE(),CURRENT_TIME(),NOW());
 SELECT * FROM test;
 DROP TABLE test;
 
+CREATE TABLE products(
+	product_id INT,
+    product_name VARCHAR(50) UNIQUE,
+    price DECIMAL(4,2)
+    );
+INSERT INTO products
+VALUES 	(100, "hamburger", 3.99),
+		(101, "fries", 1.89),
+        (102, "soda", 1.00),
+        (103, "ice cream", 1.49);
+SELECT * FROM products;
+
+DELETE FROM products
+WHERE product_id = 1;
+SELECT * FROM products;
+
+COMMIT;
+
+INSERT INTO products
+VALUES (104, "ice cream", 5.60);
+SELECT * FROM products; #commit an error
+
+ALTER TABLE products
+MODIFY price DECIMAL(4,2) NOT NULL;
+SELECT * FROM products;
+INSERT INTO products
+VALUES (104, "beer", NULL);
+SELECT * FROM products;
+
+ALTER TABLE employees
+ADD CONSTRAINT chk_hrly_pay CHECK (hourly_pay <=10);
+INSERT INTO employees
+VALUES (6, "Sheldon","Cooper",5.20, "2024-01-06");
+SELECT * FROM employees;
+
+SELECT * FROM products;
+
+ALTER TABLE products
+ALTER price SET DEFAULT 0;
+INSERT INTO products(product_id,product_name)
+VALUES	(104,"Straw"),
+		(104,"Napkin"),
+        (104,"Fork"),
+        (104,"Spoon");
+SELECT * FROM products;
+
+CREATE TABLE transactions(
+	transaction_id INT,
+    amount DECIMAL(4,2),
+    transaction_date DATETIME DEFAULT NOW()
+    );
+INSERT INTO transactions(transaction_id,amount)
+VALUES (3,6.00);
+SELECT * FROM transactions;
+DROP TABLE transactions;
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY,
+    amount DECIMAL(4,2),
+    transaction_date DATETIME DEFAULT NOW()
+    );
+INSERT INTO transactions(transaction_id,amount)
+VALUES 	(1000,4.99),
+		(1001,2.89),
+        (1002,3.38),
+        (1002,5.00);
+SELECT * FROM transactions;
+DROP TABLE transactions;
+
+CREATE TABLE transactions(
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(4,2),
+    transaction_date DATETIME DEFAULT NOW()
+    );
+INSERT INTO transactions(amount)
+VALUES (5.00);
+SELECT * FROM transactions;
+DELETE FROM transactions;
+SELECT * FROM transactions;
+ALTER TABLE transactions
+AUTO_INCREMENT = 1000;
+INSERT INTO transactions(amount)
+VALUES (8.88);
+SELECT * FROM transactions;
+
+#foreign key
+CREATE TABLE customers (
+	customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50)
+    );
+INSERT INTO customers (first_name, last_name)
+VALUES 	("Fred","Fish"),
+		("Larry","Lobster"),
+        ("Bubble","Bath");
+SELECT * FROM customers;
+
+DROP TABLE transactions;
+
+CREATE TABLE transactions (
+	transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    amount DECIMAL(5,2),
+    customer_id INT,
+    FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+SELECT * FROM transactions;
